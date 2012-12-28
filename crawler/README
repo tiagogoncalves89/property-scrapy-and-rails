@@ -1,0 +1,3 @@
+sudo apt-get install python-pip
+pip install MySQL-python
+scrapy crawl zap -o zap.json -t json

@@ -1,0 +1,12 @@
+Vagrant::Config.run do |config|
+
+  config.vm.box = "precise32"
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.network :hostonly, "192.168.33.10"
+  config.vm.share_folder "v-data", "/project", "."
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = "vagrant"
+    puppet.manifest_file  = "server-configuration.pp"
+  end
+
+end

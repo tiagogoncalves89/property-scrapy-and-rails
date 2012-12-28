@@ -1,0 +1,41 @@
+%table.imoveis{:border => 1}
+  %thead
+    %tr 
+      %td Data de Publicação
+      %td Tipo
+      - if @aluguel
+        %td Valor do Aluguel
+      %td Valor do Condomínio
+      - if @venda
+        %td Valor da Venda
+        %td Valor do m²
+      %td Número de Suítes
+      %td Número de Vagas
+      %td Dormitórios
+      %td Andares
+      %td Área Útil
+      %td UF
+      %td Cidade
+      %td Bairro
+
+  %tbody
+    - @imoveis.each do |imovel|
+      %tr
+        %td.imovel
+          %a{:href => imovel['url'], :title => imovel.descricao}
+            = imovel['data_publicacao']
+        %td.imovel= imovel['tipo']
+        - if @aluguel
+          %td.imovel= imovel['valor_aluguel']
+        %td.imovel= imovel['valor_condominio']
+        - if @venda
+          %td.imovel= imovel['valor_venda']
+          %td.imovel= imovel['valor_m2']
+        %td.imovel= imovel['numero_suites']
+        %td.imovel= imovel['numero_vagas']
+        %td.imovel= imovel['dormitorios']
+        %td.imovel= imovel['andares']
+        %td.imovel= imovel['area_util']
+        %td.imovel= imovel['uf']
+        %td.imovel= imovel['cidade']
+        %td.imovel= imovel['bairro']
