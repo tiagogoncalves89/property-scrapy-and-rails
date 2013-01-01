@@ -12,7 +12,7 @@ SPIDER_MODULES = ['imoveis.spiders']
 NEWSPIDER_MODULE = 'imoveis.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11'
 
 LOG_LEVEL = 'INFO'
 
@@ -21,8 +21,14 @@ ITEM_PIPELINES = [
   'imoveis.pipelines.MySQLStorePipeline'
 ]
 
+COOKIES_ENABLED = False
+
 # Database connection information
-DATABASE_HOST = '192.168.33.10'
+DATABASE_HOST = '192.168.30.10'
 DATABASE_NAME = 'ror_imoveis_development'
 DATABASE_USER = 'root'
 DATABASE_PASSWORD = ''
+
+CONCURRENT_ITEMS = 1000
+CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS_PER_DOMAIN = 32

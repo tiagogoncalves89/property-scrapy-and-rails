@@ -62,7 +62,7 @@ class MySQLStorePipeline(object):
 
   def _insert(self, tx, item):
     try:
-      tx.execute("INSERT INTO `imoveis`\
+      tx.execute("INSERT IGNORE INTO `imoveis`\
         (valor_aluguel, valor_condominio, valor_venda, valor_m2, numero_suites, numero_vagas, dormitorios, andares, ano_construcao, \
           area_util, descricao, tipo, localizacao, uf, cidade, bairro, rua, anunciante, creci, areas_comuns, condicoes_comerciais, outros_itens, \
           telefones, data_publicacao, url, created_at, updated_at)\
@@ -95,5 +95,5 @@ class MySQLStorePipeline(object):
         )
       )
     except MySQLdb.Error, e:
-      log.msg(item['url'], log.ERROR)
-      #log.msg(("Error %d: %s" % (e.args[0], e.args[1])), log.ERROR)
+      log.msg('URL DO ERRO: ' + str(item['url']), log.ERROR)
+      log.msg(("Error %d: %s" % (e.args[0], e.args[1])), log.ERROR)

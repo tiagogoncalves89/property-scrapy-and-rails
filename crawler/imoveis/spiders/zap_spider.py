@@ -6,8 +6,7 @@ import MySQLdb.cursors
 from scrapy.conf import settings
 from scrapy.http import Request
 from scrapy import log
-from scrapy.contrib.spiders import SitemapSpider
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib.spiders import SitemapSpider, Rule
 from scrapy.selector import HtmlXPathSelector
 from scrapy.contrib.loader import XPathItemLoader
 from imoveis.items import ImovelItem
@@ -80,39 +79,30 @@ class ZapSpider(SitemapSpider):
     self.cursor = self.conn.cursor()
     super(ZapSpider, self).__init__()
 
-  def is_valid_url(self, url):
-    try:
-        self.cursor.execute("SELECT url FROM imoveis WHERE url = %s", url)
-        result = self.cursor.fetchone()
-        return result == None
-
-    except MySQLdb.Error, e:
-      log.msg(("Error %d: %s" % (e.args[0], e.args[1])), log.ERROR)
-      return False
-
   def _parse_sitemap(self, response):
     if response.url.endswith('/robots.txt'):
-        for url in sitemap_urls_from_robots(response.body):
-            yield Request(url, callback=self._parse_sitemap)
+      for url in sitemap_urls_from_robots(response.body):
+        yield Request(url, callback=self._parse_sitemap)
     else:
-        body = self._get_sitemap_body(response)
-        if body is None:
-            log.msg(format="Ignoring invalid sitemap: %(response)s",
-                    level=log.WARNING, spider=self, response=response)
-            return
+      body = self._get_sitemap_body(response)
+      if body is None:
+        log.msg(format="Ignoring invalid sitemap: %(response)s", level=log.WARNING, spider=self, response=response)
+        return
 
-        s = Sitemap(body)
-        if s.type == 'sitemapindex':
-            for loc in iterloc(s):
-                if any(x.search(loc) for x in self._follow):
-                    yield Request(loc, callback=self._parse_sitemap)
-        elif s.type == 'urlset':
-            for loc in iterloc(s):
-                for r, c in self._cbs:
-                    if r.search(loc) and self.is_valid_url(loc):
-                        yield Request(loc, callback=c)
-                        break
+      s = Sitemap(body)
+      if s.type == 'sitemapindex':
+        for loc in extrair_url(s):
+          if any(x.search(loc) for x in self._follow):
+            yield Request(loc, callback=self._parse_sitemap)
+      elif s.type == 'urlset':
+        for loc in extrair_url(s):
+          for r, c in self._cbs:
+            if r.search(loc):
+              rows = self.cursor.execute("SELECT id FROM imoveis WHERE url = %s", loc)
+              if rows == 0:
+                yield Request(loc, callback=c)
+                break
 
-def iterloc(it):
-    for d in it:
-        yield d['loc']
+def extrair_url(it):
+  for d in it:
+    yield d['loc']
