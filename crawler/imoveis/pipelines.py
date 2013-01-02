@@ -37,6 +37,7 @@ class DefaultValuesPipeline(object):
       item.setdefault('condicoes_comerciais', '')
       item.setdefault('outros_itens', '')
       item.setdefault('telefones', '')
+      item.setdefault('imagens', [])
       item.setdefault('data_publicacao', '')
       item.setdefault('url', '')
 
@@ -94,6 +95,16 @@ class MySQLStorePipeline(object):
           item['url']
         )
       )
+
+      imovel_id = tx.lastrowid
+      if imovel_id > 0:
+        for imagem in item['imagens']:
+          tx.execute("INSERT INTO `imovel_imagens`\
+            (url, imovel_id, created_at, updated_at)\
+              VALUES (%s, %s, now(), now())", (
+                imagem,
+                imovel_id
+              ))
     except MySQLdb.Error, e:
       log.msg('URL DO ERRO: ' + str(item['url']), log.ERROR)
       log.msg(("Error %d: %s" % (e.args[0], e.args[1])), log.ERROR)

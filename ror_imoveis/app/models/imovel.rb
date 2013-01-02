@@ -8,8 +8,8 @@ class Imovel < ActiveRecord::Base
     pesquisa = pesquisa.where(:tipo => campos['tipo']) if campos['tipo']
     pesquisa = pesquisa.where('valor_aluguel > 0') if campos['negociacao'].include? 'aluguel'
     pesquisa = pesquisa.where('valor_venda > 0') if campos['negociacao'].include? 'venda'
-    pesquisa = pesquisa.where('(valor_aluguel + valor_condominio) < ?', campos['preco_maximo']) if campos['preco_maximo'] and campos['negociacao'].include? 'aluguel'
-    pesquisa = pesquisa.where('(valor_venda + valor_condominio) < ?', campos['preco_maximo']) if campos['preco_maximo'] and campos['negociacao'].include? 'venda'
+    pesquisa = pesquisa.where('(valor_aluguel + valor_condominio) < ?', campos['preco_maximo']) if not campos['preco_maximo'].empty? and campos['negociacao'].include? 'aluguel'
+    pesquisa = pesquisa.where('(valor_venda + valor_condominio) < ?', campos['preco_maximo']) if not campos['preco_maximo'].empty? and campos['negociacao'].include? 'venda'
     pesquisa = pesquisa.where('numero_vagas >= ?', campos['numero_vagas']) if campos['numero_vagas']
     pesquisa = pesquisa.where(:cidade => campos['cidade']) if campos['cidade']
 

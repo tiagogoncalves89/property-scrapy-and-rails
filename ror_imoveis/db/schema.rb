@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20121226005650) do
     t.string   "outros_itens"
     t.string   "telefones"
     t.date     "data_publicacao"
-    t.integer  "imovel_imagens_id"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
   end
@@ -71,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20121226005650) do
 
   create_table "imovel_imagens", :force => true do |t|
     t.string   "url"
+    t.integer  "imovel_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

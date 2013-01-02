@@ -47,6 +47,8 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fancybox-rails (0.1.4)
+      railties (>= 3.1.0)
     fssm (0.2.9)
     haml (3.1.7)
     haml-rails (0.3.5)
@@ -125,6 +127,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   compass-rails
+  fancybox-rails
   haml-rails
   jquery-rails
   json

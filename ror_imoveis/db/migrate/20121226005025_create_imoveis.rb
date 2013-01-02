@@ -27,7 +27,6 @@ class CreateImoveis < ActiveRecord::Migration
       t.string :outros_itens
       t.string :telefones
       t.date :data_publicacao
-      t.references :imovel_imagens
 
       t.timestamps     
     end

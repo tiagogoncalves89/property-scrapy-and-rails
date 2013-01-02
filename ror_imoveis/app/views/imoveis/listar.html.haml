@@ -17,25 +17,33 @@
       %td UF
       %td Cidade
       %td Bairro
+      %td Imagens
 
   %tbody
     - @imoveis.each do |imovel|
       %tr
-        %td.imovel
+        %td
           %a{:href => imovel['url'], :title => imovel.descricao}
             = imovel['data_publicacao']
-        %td.imovel= imovel['tipo']
+        %td= imovel['tipo']
         - if @aluguel
-          %td.imovel= imovel['valor_aluguel']
-        %td.imovel= imovel['valor_condominio']
+          %td= imovel['valor_aluguel']
+        %td= imovel['valor_condominio']
         - if @venda
-          %td.imovel= imovel['valor_venda']
-          %td.imovel= imovel['valor_m2']
-        %td.imovel= imovel['numero_suites']
-        %td.imovel= imovel['numero_vagas']
-        %td.imovel= imovel['dormitorios']
-        %td.imovel= imovel['andares']
-        %td.imovel= imovel['area_util']
-        %td.imovel= imovel['uf']
-        %td.imovel= imovel['cidade']
-        %td.imovel= imovel['bairro']
+          %td= imovel['valor_venda']
+          %td= imovel['valor_m2']
+        %td= imovel['numero_suites']
+        %td= imovel['numero_vagas']
+        %td= imovel['dormitorios']
+        %td= imovel['andares']
+        %td= imovel['area_util']
+        %td= imovel['uf']
+        %td= imovel['cidade']
+        %td= imovel['bairro']
+        %td
+          - if imovel.imovel_imagens
+            %ul.imagens
+              - imovel.imovel_imagens.each do |imagem|
+                %li
+                  %a{:href => imagem.url, :rel => imovel.id}
+                    Ver Imagens

@@ -16,5 +16,12 @@
 
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'imovel', 'imoveis'
+
   inflect.irregular 'imovel_imagem', 'imovel_imagens'
+  inflect.plural 'imovel_imagem', 'imovel_imagens'
+  inflect.singular 'imovel_imagens', 'imovel_imagem'
+  inflect.irregular 'ImovelImagem', 'ImovelImagens'
+  inflect.plural 'ImovelImagem', 'ImovelImagens'
+  inflect.singular 'ImovelImagens', 'ImovelImagem'
+  
 end

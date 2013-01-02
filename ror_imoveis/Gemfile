@@ -5,6 +5,7 @@ gem 'mysql2'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'json'
+gem 'fancybox-rails'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
