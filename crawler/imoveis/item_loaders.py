@@ -1,23 +1,20 @@
 from scrapy.contrib.loader import XPathItemLoader
 from scrapy.contrib.loader.processor import TakeFirst, Identity, Join
-from imoveis.processors import ParseDate, ParseDecimalEnd, ParseIntegerStart, ParseCreci
+from imoveis.processors import ParseDate, ParseDecimal
 
 class ImovelLoader(XPathItemLoader):
   default_output_processor = TakeFirst()
 
-  creci_out = ParseCreci()
-  valor_condominio_out = ParseDecimalEnd()
-  valor_venda_out = ParseDecimalEnd()
-  valor_aluguel_out = ParseDecimalEnd()
-  valor_m2_out = ParseDecimalEnd()
-  numero_suites_out = ParseIntegerStart()
-  andares_out = ParseIntegerStart()
-  area_util_out = ParseIntegerStart()
-  numero_vagas_out = ParseIntegerStart()
-  dormitorios_out = ParseIntegerStart()
-  data_publicacao_out = ParseDate()
+  imagens_out = Identity()
+
   areas_comuns_out = Join(', ')
   condicoes_comerciais_out = Join(', ')
   outros_itens_out = Join(', ')
   telefones_out = Join(', ')
-  imagens_out = Identity()
+
+  valor_condominio_out = ParseDecimal()
+  valor_venda_out = ParseDecimal()
+  valor_aluguel_out = ParseDecimal()
+  valor_m2_out = ParseDecimal()
+
+  data_publicacao_out = ParseDate()

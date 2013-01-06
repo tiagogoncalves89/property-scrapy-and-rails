@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121226005650) do
+ActiveRecord::Schema.define(:version => 20130106171807) do
 
   create_table "imoveis", :force => true do |t|
     t.decimal  "valor_aluguel",        :precision => 10, :scale => 0
@@ -34,11 +34,12 @@ ActiveRecord::Schema.define(:version => 20121226005650) do
     t.string   "rua"
     t.string   "anunciante"
     t.string   "creci"
-    t.string   "areas_comuns"
-    t.string   "condicoes_comerciais"
-    t.string   "outros_itens"
+    t.text     "areas_comuns"
+    t.text     "condicoes_comerciais"
+    t.text     "outros_itens"
     t.string   "telefones"
     t.date     "data_publicacao"
+    t.integer  "imovel_site_id"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
   end
@@ -47,19 +48,15 @@ ActiveRecord::Schema.define(:version => 20121226005650) do
   add_index "imoveis", ["ano_construcao"], :name => "index_imoveis_on_ano_construcao"
   add_index "imoveis", ["anunciante"], :name => "index_imoveis_on_anunciante"
   add_index "imoveis", ["area_util"], :name => "index_imoveis_on_area_util"
-  add_index "imoveis", ["areas_comuns"], :name => "index_imoveis_on_areas_comuns"
   add_index "imoveis", ["bairro"], :name => "index_imoveis_on_bairro"
   add_index "imoveis", ["cidade"], :name => "index_imoveis_on_cidade"
-  add_index "imoveis", ["condicoes_comerciais"], :name => "index_imoveis_on_condicoes_comerciais"
   add_index "imoveis", ["creci"], :name => "index_imoveis_on_creci"
   add_index "imoveis", ["data_publicacao"], :name => "index_imoveis_on_data_publicacao"
   add_index "imoveis", ["dormitorios"], :name => "index_imoveis_on_dormitorios"
   add_index "imoveis", ["localizacao"], :name => "index_imoveis_on_localizacao"
   add_index "imoveis", ["numero_suites"], :name => "index_imoveis_on_numero_suites"
   add_index "imoveis", ["numero_vagas"], :name => "index_imoveis_on_numero_vagas"
-  add_index "imoveis", ["outros_itens"], :name => "index_imoveis_on_outros_itens"
   add_index "imoveis", ["rua"], :name => "index_imoveis_on_rua"
-  add_index "imoveis", ["telefones"], :name => "index_imoveis_on_telefones"
   add_index "imoveis", ["tipo"], :name => "index_imoveis_on_tipo"
   add_index "imoveis", ["uf"], :name => "index_imoveis_on_uf"
   add_index "imoveis", ["url"], :name => "index_imoveis_on_url", :unique => true
@@ -74,5 +71,15 @@ ActiveRecord::Schema.define(:version => 20121226005650) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "imovel_sites", :force => true do |t|
+    t.string   "nome"
+    t.string   "url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "imovel_sites", ["nome"], :name => "index_imovel_sites_on_nome", :unique => true
+  add_index "imovel_sites", ["url"], :name => "index_imovel_sites_on_url", :unique => true
 
 end

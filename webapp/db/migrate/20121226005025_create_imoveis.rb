@@ -22,11 +22,12 @@ class CreateImoveis < ActiveRecord::Migration
       t.string :rua
       t.string :anunciante
       t.string :creci
-      t.string :areas_comuns
-      t.string :condicoes_comerciais
-      t.string :outros_itens
+      t.text :areas_comuns
+      t.text :condicoes_comerciais
+      t.text :outros_itens
       t.string :telefones
       t.date :data_publicacao
+      t.references :imovel_site
 
       t.timestamps     
     end
@@ -50,10 +51,6 @@ class CreateImoveis < ActiveRecord::Migration
     add_index :imoveis, :rua
     add_index :imoveis, :anunciante
     add_index :imoveis, :creci
-    add_index :imoveis, :areas_comuns
-    add_index :imoveis, :condicoes_comerciais
-    add_index :imoveis, :outros_itens
-    add_index :imoveis, :telefones
     add_index :imoveis, :data_publicacao 
   end
 

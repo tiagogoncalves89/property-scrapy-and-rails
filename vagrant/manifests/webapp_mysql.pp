@@ -1,4 +1,4 @@
-class mysql {
+class webapp_mysql {
   
   package { 'mysql-server':
     ensure => present,
@@ -7,7 +7,7 @@ class mysql {
 
   file { 'my.cnf':
     path => '/etc/mysql/my.cnf',
-    source => '/vagrant/vagrant/files/my.cnf',
+    source => '/vagrant/files/my.cnf',
     notify => Service['mysql']
   } ->
 

@@ -66,8 +66,8 @@ class MySQLStorePipeline(object):
       tx.execute("INSERT IGNORE INTO `imoveis`\
         (valor_aluguel, valor_condominio, valor_venda, valor_m2, numero_suites, numero_vagas, dormitorios, andares, ano_construcao, \
           area_util, descricao, tipo, localizacao, uf, cidade, bairro, rua, anunciante, creci, areas_comuns, condicoes_comerciais, outros_itens, \
-          telefones, data_publicacao, url, created_at, updated_at)\
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, now(), now())", (
+          telefones, data_publicacao, url, imovel_site_id, created_at, updated_at)\
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 1, now(), now())", (
           item['valor_aluguel'],
           item['valor_condominio'],
           item['valor_venda'],

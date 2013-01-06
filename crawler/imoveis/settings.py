@@ -22,6 +22,7 @@ ITEM_PIPELINES = [
 ]
 
 COOKIES_ENABLED = False
+REDIRECT_MAX_TIMES = 0
 
 # Database connection information
 DATABASE_HOST = '192.168.30.10'

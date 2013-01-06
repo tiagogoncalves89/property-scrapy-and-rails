@@ -7,6 +7,10 @@ class base {
 	  command => '/usr/bin/apt-get update'
 	} ->
 
+  exec { 'apt-get upgrade':
+    command => '/usr/bin/apt-get upgrade -y'
+  } ->
+
 	package { 'vim':
 	  ensure => present
 	}

@@ -1,4 +1,4 @@
-class rails {
+class webapp_rails {
 
   package { ['ruby1.9.3', 'libmysqlclient-dev', 'nodejs']:
     ensure => present,
@@ -15,7 +15,7 @@ class rails {
   exec { 'bundle install':
     path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant_ruby/bin',
     command => 'bundle install --path=/home/vagrant',
-    cwd => '/vagrant/ror_imoveis',
+    cwd => '/project',
     logoutput => true,
     user => 'vagrant'
   } ->
@@ -23,8 +23,8 @@ class rails {
   exec { 'rake db':
     path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant_ruby/bin',
     unless => '/usr/bin/mysql -u root wp_imoveis_development',
-    command => 'rake db:create && rake db:migrate && rake db:test:prepare',
-    cwd => '/vagrant/ror_imoveis',
+    command => 'rake db:create && rake db:migrate && rake db:seed && rake db:test:prepare',
+    cwd => '/project',
     logoutput => true,
     user => 'vagrant'
   } ->
@@ -32,7 +32,7 @@ class rails {
   exec { 'rails server':
     path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant_ruby/bin',
     command => 'nohup rails s > /dev/null 2>&1 &',
-    cwd => '/vagrant/ror_imoveis',
+    cwd => '/project',
     logoutput => true,
     user => 'vagrant'
   }

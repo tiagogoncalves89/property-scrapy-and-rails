@@ -31,38 +31,30 @@ class ZapSpider(SitemapSpider):
       loader = ImovelLoader(item=ImovelItem(), response = response)
       loader.add_value('url', response.url)
       loader.add_xpath('tipo', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[1]/text()')
-      loader.add_xpath('valor_aluguel', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divAluguel"]/p[2]/text()')
-      loader.add_xpath('valor_condominio', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liCondominio"]/span[2]/text()')
-      loader.add_xpath('valor_venda', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divValor"]/p[2]/text()')
-      loader.add_xpath('valor_m2', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liValorM2"]/span[2]/text()')
-      loader.add_xpath('numero_suites', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdSuites"]/span[2]/text()')
-      loader.add_xpath('numero_vagas', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdVagas"]/span[2]/text()')
-      loader.add_xpath('dormitorios', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbDorms"]/text()')
-      loader.add_xpath('andares', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbAndar"]/text()')
+      loader.add_xpath('valor_aluguel', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divAluguel"]/p[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('valor_condominio', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liCondominio"]/span[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('valor_venda', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divValor"]/p[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('valor_m2', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liValorM2"]/span[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('numero_suites', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdSuites"]/span[2]/text()', re = "^([0-9]+)")
+      loader.add_xpath('numero_vagas', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdVagas"]/span[2]/text()', re = "^([0-9]+)")
+      loader.add_xpath('dormitorios', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbDorms"]/text()', re = "^([0-9]+)")
+      loader.add_xpath('andares', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbAndar"]/text()', re = "^([0-9]+)")
       loader.add_xpath('ano_construcao', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbConstrucao"]/text()')
-      loader.add_xpath('area_util', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liAreaM2"]/span[2]/text()')
+      loader.add_xpath('area_util', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liAreaM2"]/span[2]/text()', re = "^([0-9]+)")
       loader.add_xpath('descricao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div[7]/h3/text()')
       loader.add_xpath('localizacao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[2]/text()')
       loader.add_xpath('bairro', '//*[@id="divReputacaoBairro"]/h4/span/text()')
       loader.add_xpath('rua', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[3]/text()')
       loader.add_xpath('anunciante', '//*[@id="ctl00_ContentPlaceHolder1_contatelateral_plAnunciante"]/div[2]/h4/text()')
-      loader.add_xpath('creci', '//*[@id="ctl00_ContentPlaceHolder1_contatelateral_pCreci"]/text()')
+      loader.add_xpath('creci', '//*[@id="ctl00_ContentPlaceHolder1_contatelateral_pCreci"]/text()', re = "([0-9a-zA-Z ]+)$")
       loader.add_xpath('areas_comuns', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[3]/div[1]/ul/li/text()')
       loader.add_xpath('condicoes_comerciais', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[2]/ul/li/text()')
       loader.add_xpath('outros_itens', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[1]/ul/li/text()')
       loader.add_xpath('telefones', '//*[@id="ctl00_ContentPlaceHolder1_vertelefones"]/div[3]/div/span/text()')
       loader.add_xpath('imagens', '//*[@id="galleria"]/a/@href')
-      loader.add_xpath('data_publicacao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div/span[1]/text()')
-
-      # Extraindo informações de javascript
-      for script in hxs.select('//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()').extract():
-        uf = re.search("var UF='([^']+)';", script)
-        if uf:
-          loader.add_value('uf', uf.group(1))
-
-        cidade = re.search("var Cidade='([^']+)';", script)
-        if cidade:
-          loader.add_value('cidade',cidade.group(1))
+      loader.add_xpath('data_publicacao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div/span[1]/text()', re = "([0-9/]+)$")
+      loader.add_xpath('uf', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var UF='([^']+)';")
+      loader.add_xpath('cidade', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var Cidade='([^']+)';")
 
       return loader.load_item()
 
@@ -96,6 +88,8 @@ class ZapSpider(SitemapSpider):
             yield Request(loc, callback=self._parse_sitemap)
       elif s.type == 'urlset':
         for loc in extrair_url(s):
+          if 'aluguel' in loc:
+            print loc
           for r, c in self._cbs:
             if r.search(loc):
               rows = self.cursor.execute("SELECT id FROM imoveis WHERE url = %s", loc)
