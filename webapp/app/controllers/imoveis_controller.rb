@@ -2,15 +2,16 @@
 
 class ImoveisController < ApplicationController
 
-  def index
-    @tipos = Imovel.select(:tipo).uniq.collect { |imovel| imovel.tipo }
-    @cidades = Imovel.select(:cidade).uniq.collect { |imovel| imovel.cidade }
-  end
+  def pesquisa
+    @aluguel = params['aluguel']
+    @venda = params['venda']
 
-  def listar
-    @imoveis = Imovel.pesquisar(params)
-    @venda = params['negociacao'].include? 'venda'
-    @aluguel = params['negociacao'].include? 'aluguel'
-  end 
+    params[:q] = {} unless params[:q]
+    params[:q].store(:aluguel_true, '1') if @aluguel
+    params[:q].store(:venda_true, '1') if @venda
+
+    @search = Imovel.search(params[:q])
+    @imoveis = @search.result
+  end
 
 end

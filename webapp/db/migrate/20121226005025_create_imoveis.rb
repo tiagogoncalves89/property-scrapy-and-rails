@@ -2,6 +2,8 @@ class CreateImoveis < ActiveRecord::Migration
 
   def change
     create_table :imoveis do |t|
+      t.boolean :aluguel
+      t.boolean :venda
       t.decimal :valor_aluguel
       t.decimal :valor_condominio
       t.decimal :valor_venda

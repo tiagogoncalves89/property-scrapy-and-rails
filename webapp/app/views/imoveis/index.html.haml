@@ -1,41 +1,4 @@
-= form_tag imoveis_listar_path do
-  %fieldset
-    %legend Pesquisa de Imóveis
-
-    .rotulo-campo Tipo de Imóvel
-    %ul
-      - @tipos.each do |tipo|
-        %li
-          %label
-            = check_box_tag 'tipo[]', tipo
-            = tipo
-
-    .rotulo-campo Negociação
-    %ul
-      %li
-        %label
-          = check_box_tag 'negociacao[]', 'aluguel'
-          Aluguel
-      %li
-        %label
-          = check_box_tag 'negociacao[]', 'venda'
-          Venda
-
-    .rotulo-campo Preço Máximo
-    %label
-      = number_field_tag 'preco_maximo'
-
-    %label
-      Vagas
-      = number_field_tag 'numero_vagas'
-
-    .rotulo-campo Cidade
-    %ul
-      - @cidades.each do |cidade|
-        %li
-          %label
-            = check_box_tag 'cidade[]', cidade
-            = cidade
-
-
-  = submit_tag 'Pesquisar'
+.venda
+  = link_to 'Venda', imoveis_venda_path
+.aluguel
+  = link_to 'Aluguel', imoveis_aluguel_path

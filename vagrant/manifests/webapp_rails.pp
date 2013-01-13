@@ -2,7 +2,7 @@ class webapp_rails {
 
   package { ['ruby1.9.3', 'libmysqlclient-dev', 'nodejs']:
     ensure => present,
-    require => Exec['apt-get update']
+    require => Exec['apt-get upgrade']
   } ->
 
   exec { 'install rails':
@@ -22,11 +22,12 @@ class webapp_rails {
 
   exec { 'rake db':
     path => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant_ruby/bin',
-    unless => '/usr/bin/mysql -u root wp_imoveis_development',
+    unless => '/usr/bin/mysql -u root ror_imoveis_development',
     command => 'rake db:create && rake db:migrate && rake db:seed && rake db:test:prepare',
     cwd => '/project',
     logoutput => true,
-    user => 'vagrant'
+    user => 'vagrant',
+    require => Service['mysql']
   } ->
 
   exec { 'rails server':

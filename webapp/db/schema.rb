@@ -14,6 +14,8 @@
 ActiveRecord::Schema.define(:version => 20130106171807) do
 
   create_table "imoveis", :force => true do |t|
+    t.boolean  "aluguel"
+    t.boolean  "venda"
     t.decimal  "valor_aluguel",        :precision => 10, :scale => 0
     t.decimal  "valor_condominio",     :precision => 10, :scale => 0
     t.decimal  "valor_venda",          :precision => 10, :scale => 0

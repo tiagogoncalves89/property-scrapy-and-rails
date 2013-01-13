@@ -2,7 +2,7 @@ class webapp_mysql {
   
   package { 'mysql-server':
     ensure => present,
-    require => Exec['apt-get update']
+    require => Exec['apt-get upgrade']
   } ->
 
   file { 'my.cnf':
