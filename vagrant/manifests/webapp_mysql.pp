@@ -1,12 +1,12 @@
 class webapp_mysql {
   
   package { 'mysql-server':
-    ensure => present,
-    require => Exec['apt-get upgrade']
+    ensure  => present,
+    require => Exec['apt-get update']
   } ->
 
   file { 'my.cnf':
-    path => '/etc/mysql/my.cnf',
+    path   => '/etc/mysql/my.cnf',
     source => '/vagrant/files/my.cnf',
     notify => Service['mysql']
   } ->
