@@ -1,5 +1,5 @@
 class webapp_mysql {
-  
+
   package { 'mysql-server':
     ensure  => present,
     require => Exec['apt-get update']
@@ -7,7 +7,7 @@ class webapp_mysql {
 
   file { 'my.cnf':
     path   => '/etc/mysql/my.cnf',
-    source => '/vagrant/files/my.cnf',
+    source => '/tmp/vagrant-puppet/files/my.cnf',
     notify => Service['mysql']
   } ->
 

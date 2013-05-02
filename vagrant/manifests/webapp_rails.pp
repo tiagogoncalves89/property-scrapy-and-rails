@@ -13,25 +13,25 @@ class webapp_rails {
 
   exec { 'bundle install':
     command   => '/usr/local/bin/bundle install --path=/home/vagrant',
-    cwd       => '/project',
+    cwd       => '/vagrant/webapp',
     logoutput => true,
     user      => 'vagrant'
   } ->
 
   exec { 'rake db':
-    path      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant_ruby/bin',
+    path      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/tmp/vagrant-puppet/files_ruby/bin',
     unless    => 'mysql -u root ror_imoveis_development',
     command   => 'bundle exec rake db:create && bundle exec rake db:migrate && bundle exec rake db:seed && bundle exec rake db:test:prepare',
-    cwd       => '/project',
+    cwd       => '/vagrant/webapp',
     logoutput => true,
     user      => 'vagrant',
     require   => Service['mysql']
   } ->
 
   exec { 'rails server':
-    path      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/vagrant_ruby/bin',
+    path      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/tmp/vagrant-puppet/files_ruby/bin',
     command   => '/usr/bin/nohup bundle exec rails s > /dev/null 2>&1 &',
-    cwd       => '/project',
+    cwd       => '/vagrant/webapp',
     logoutput => true,
     user      => 'vagrant'
   }
