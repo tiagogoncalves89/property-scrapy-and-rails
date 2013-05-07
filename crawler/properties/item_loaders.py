@@ -1,11 +1,11 @@
 from scrapy.contrib.loader import XPathItemLoader
 from scrapy.contrib.loader.processor import TakeFirst, Identity, Join
-from imoveis.processors import ParseDate, ParseDecimal
+from properties.processors import ParseDate, ParseDecimal
 
-class ImovelLoader(XPathItemLoader):
+class PropertyLoader(XPathItemLoader):
   default_output_processor = TakeFirst()
 
-  imagens_out = Identity()
+  images_out = Identity()
 
   areas_comuns_out = Join(', ')
   condicoes_comerciais_out = Join(', ')

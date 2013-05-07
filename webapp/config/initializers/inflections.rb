@@ -15,13 +15,13 @@
 # end
 
 ActiveSupport::Inflector.inflections do |inflect|
-  inflect.irregular 'imovel', 'imoveis'
+  inflect.irregular 'property', 'properties'
 
-  inflect.irregular 'imovel_imagem', 'imovel_imagens'
-  inflect.plural 'imovel_imagem', 'imovel_imagens'
-  inflect.singular 'imovel_imagens', 'imovel_imagem'
-  inflect.irregular 'ImovelImagem', 'ImovelImagens'
-  inflect.plural 'ImovelImagem', 'ImovelImagens'
-  inflect.singular 'ImovelImagens', 'ImovelImagem'
-  
+  inflect.irregular 'property_image', 'property_images'
+  inflect.plural 'property_image', 'property_images'
+  inflect.singular 'property_images', 'property_image'
+  inflect.irregular 'PropertyImage', 'PropertyImages'
+  inflect.plural 'PropertyImage', 'PropertyImages'
+  inflect.singular 'PropertyImages', 'PropertyImage'
+
 end

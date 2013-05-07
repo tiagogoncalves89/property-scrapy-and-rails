@@ -6,7 +6,7 @@
 development:
   adapter: mysql2
   host: localhost
-  database: ror_imoveis_development
+  database: ror_properties_development
   user: root
   password:
 
@@ -16,6 +16,6 @@ development:
 test:
   adapter: mysql2
   host: localhost
-  database: ror_imoveis_test
+  database: ror_properties_test
   user: root
   password:

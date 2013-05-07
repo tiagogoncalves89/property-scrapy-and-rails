@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-	$('ul.imagens').each ->
+	$('ul.images').each ->
 		$('li a', $(this)).fancybox({
 			'type': 'image'
 		})

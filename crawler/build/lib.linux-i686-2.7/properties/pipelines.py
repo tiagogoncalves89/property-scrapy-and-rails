@@ -37,7 +37,7 @@ class DefaultValuesPipeline(object):
     item.setdefault('condicoes_comerciais', '')
     item.setdefault('outros_itens', '')
     item.setdefault('telefones', '')
-    item.setdefault('imagens', [])
+    item.setdefault('images', [])
     item.setdefault('data_publicacao', '')
     item.setdefault('url', '')
 
@@ -71,10 +71,10 @@ class MySQLStorePipeline(object):
       if item['valor_venda'] > 0:
         venda = True
 
-      tx.execute("INSERT IGNORE INTO `imoveis`\
+      tx.execute("INSERT IGNORE INTO `properties`\
         (valor_aluguel, valor_condominio, valor_venda, valor_m2, numero_suites, numero_vagas, dormitorios, andares, ano_construcao, \
           area_util, descricao, tipo, localizacao, uf, cidade, bairro, rua, anunciante, creci, areas_comuns, condicoes_comerciais, outros_itens, \
-          telefones, data_publicacao, url, aluguel, venda, imovel_site_id, created_at, updated_at)\
+          telefones, data_publicacao, url, aluguel, venda, property_site_id, created_at, updated_at)\
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 1, now(), now())", (
           item['valor_aluguel'],
           item['valor_condominio'],
@@ -106,14 +106,14 @@ class MySQLStorePipeline(object):
         )
       )
 
-      imovel_id = tx.lastrowid
-      if imovel_id > 0:
-        for imagem in item['imagens']:
-          tx.execute("INSERT INTO `imovel_imagens`\
-            (url, imovel_id, created_at, updated_at)\
+      property_id = tx.lastrowid
+      if property_id > 0:
+        for image in item['images']:
+          tx.execute("INSERT INTO `property_images`\
+            (url, property_id, created_at, updated_at)\
               VALUES (%s, %s, now(), now())", (
-                imagem,
-                imovel_id
+                image,
+                property_id
               ))
     except MySQLdb.Error, e:
       log.msg('URL DO ERRO: ' + str(item['url']), log.ERROR)

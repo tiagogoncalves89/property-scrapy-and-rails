@@ -9,8 +9,8 @@ from scrapy import log
 from scrapy.contrib.spiders import SitemapSpider, Rule
 from scrapy.selector import HtmlXPathSelector
 from scrapy.contrib.loader import XPathItemLoader
-from imoveis.items import ImovelItem
-from imoveis.item_loaders import ImovelLoader
+from properties.items import PropertyItem
+from properties.item_loaders import PropertyLoader
 
 from scrapy.utils.sitemap import Sitemap
 
@@ -18,7 +18,7 @@ class ZapSpider(SitemapSpider):
   name = 'zap'
   sitemap_urls = ['http://www.zap.com.br/sitemap_index.xml']
   sitemap_rules = [
-    ('imoveis/.*/(id|ID)-([0-9]+)$', 'parse_item')
+    ('properties/.*/(id|ID)-([0-9]+)$', 'parse_item')
   ]
 
   def parse_item(self, response):
@@ -28,7 +28,7 @@ class ZapSpider(SitemapSpider):
     apagado = len(hxs.select('//*[@id="ctl00_ContentPlaceHolder1_divMensagemAlerta"]/p').extract()) > 0
 
     if not inativo and not apagado and response.status == 200:
-      loader = ImovelLoader(item=ImovelItem(), response = response)
+      loader = PropertyLoader(item=PropertyItem(), response = response)
       loader.add_value('url', response.url)
       loader.add_xpath('tipo', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[1]/text()')
       loader.add_xpath('valor_aluguel', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divAluguel"]/p[2]/text()', re = "([0-9\.,]+)$")
@@ -51,7 +51,7 @@ class ZapSpider(SitemapSpider):
       loader.add_xpath('condicoes_comerciais', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[2]/ul/li/text()')
       loader.add_xpath('outros_itens', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[1]/ul/li/text()')
       loader.add_xpath('telefones', '//*[@id="ctl00_ContentPlaceHolder1_vertelefones"]/div[3]/div/span/text()')
-      loader.add_xpath('imagens', '//*[@id="galleria"]/a/@href')
+      loader.add_xpath('images', '//*[@id="galleria"]/a/@href')
       loader.add_xpath('data_publicacao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div/span[1]/text()', re = "([0-9/]+)$")
       loader.add_xpath('uf', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var UF='([^']+)';")
       loader.add_xpath('cidade', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var Cidade='([^']+)';")
@@ -60,11 +60,11 @@ class ZapSpider(SitemapSpider):
 
   def __init__(self):
     self.conn = MySQLdb.connect(
-      user=settings['DATABASE_USER'], 
-      passwd=settings['DATABASE_PASSWORD'], 
-      db=settings['DATABASE_NAME'], 
-      host=settings['DATABASE_HOST'], 
-      charset="utf8", 
+      user=settings['DATABASE_USER'],
+      passwd=settings['DATABASE_PASSWORD'],
+      db=settings['DATABASE_NAME'],
+      host=settings['DATABASE_HOST'],
+      charset="utf8",
       use_unicode=True
     )
 
@@ -92,7 +92,7 @@ class ZapSpider(SitemapSpider):
             print loc
           for r, c in self._cbs:
             if r.search(loc):
-              rows = self.cursor.execute("SELECT id FROM imoveis WHERE url = %s", loc)
+              rows = self.cursor.execute("SELECT id FROM properties WHERE url = %s", loc)
               if rows == 0:
                 yield Request(loc, callback=c)
                 break

@@ -5,7 +5,7 @@
 
 from scrapy.item import Item, Field
 
-class ImovelItem(Item):
+class PropertyItem(Item):
   valor_aluguel = Field()
   valor_condominio = Field()
   valor_venda = Field()
@@ -29,6 +29,6 @@ class ImovelItem(Item):
   condicoes_comerciais = Field()
   outros_itens = Field()
   telefones = Field()
-  imagens = Field()
+  images = Field()
   data_publicacao = Field()
   url = Field()

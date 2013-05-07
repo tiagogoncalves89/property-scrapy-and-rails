@@ -1,7 +1,7 @@
-Imoveis::Application.routes.draw do
+Properties::Application.routes.draw do
 
-  root :to => 'imoveis#index', :as => 'imoveis'
-  match 'imoveis/aluguel' => 'imoveis#pesquisa', :defaults => { :aluguel => true }, :via => :get, :as => 'imoveis_aluguel'
-  match 'imoveis/venda' => 'imoveis#pesquisa', :defaults => { :venda => true }, :via => :get, :as => 'imoveis_venda'
-  
+  root :to => 'properties#index', :as => 'properties'
+  match 'properties/aluguel' => 'properties#pesquisa', :defaults => { :aluguel => true }, :via => :get, :as => 'properties_aluguel'
+  match 'properties/venda' => 'properties#pesquisa', :defaults => { :venda => true }, :via => :get, :as => 'properties_venda'
+
 end

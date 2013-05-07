@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(:version => 20130106171807) do
 
-  create_table "imoveis", :force => true do |t|
+  create_table "properties", :force => true do |t|
     t.boolean  "aluguel"
     t.boolean  "venda"
     t.decimal  "valor_aluguel",        :precision => 10, :scale => 0
@@ -41,47 +41,47 @@ ActiveRecord::Schema.define(:version => 20130106171807) do
     t.text     "outros_itens"
     t.string   "telefones"
     t.date     "data_publicacao"
-    t.integer  "imovel_site_id"
+    t.integer  "property_source_id"
     t.datetime "created_at",                                          :null => false
     t.datetime "updated_at",                                          :null => false
   end
 
-  add_index "imoveis", ["andares"], :name => "index_imoveis_on_andares"
-  add_index "imoveis", ["ano_construcao"], :name => "index_imoveis_on_ano_construcao"
-  add_index "imoveis", ["anunciante"], :name => "index_imoveis_on_anunciante"
-  add_index "imoveis", ["area_util"], :name => "index_imoveis_on_area_util"
-  add_index "imoveis", ["bairro"], :name => "index_imoveis_on_bairro"
-  add_index "imoveis", ["cidade"], :name => "index_imoveis_on_cidade"
-  add_index "imoveis", ["creci"], :name => "index_imoveis_on_creci"
-  add_index "imoveis", ["data_publicacao"], :name => "index_imoveis_on_data_publicacao"
-  add_index "imoveis", ["dormitorios"], :name => "index_imoveis_on_dormitorios"
-  add_index "imoveis", ["localizacao"], :name => "index_imoveis_on_localizacao"
-  add_index "imoveis", ["numero_suites"], :name => "index_imoveis_on_numero_suites"
-  add_index "imoveis", ["numero_vagas"], :name => "index_imoveis_on_numero_vagas"
-  add_index "imoveis", ["rua"], :name => "index_imoveis_on_rua"
-  add_index "imoveis", ["tipo"], :name => "index_imoveis_on_tipo"
-  add_index "imoveis", ["uf"], :name => "index_imoveis_on_uf"
-  add_index "imoveis", ["url"], :name => "index_imoveis_on_url", :unique => true
-  add_index "imoveis", ["valor_aluguel"], :name => "index_imoveis_on_valor_aluguel"
-  add_index "imoveis", ["valor_condominio"], :name => "index_imoveis_on_valor_condominio"
-  add_index "imoveis", ["valor_m2"], :name => "index_imoveis_on_valor_m2"
-  add_index "imoveis", ["valor_venda"], :name => "index_imoveis_on_valor_venda"
+  add_index "properties", ["andares"], :name => "index_properties_on_andares"
+  add_index "properties", ["ano_construcao"], :name => "index_properties_on_ano_construcao"
+  add_index "properties", ["anunciante"], :name => "index_properties_on_anunciante"
+  add_index "properties", ["area_util"], :name => "index_properties_on_area_util"
+  add_index "properties", ["bairro"], :name => "index_properties_on_bairro"
+  add_index "properties", ["cidade"], :name => "index_properties_on_cidade"
+  add_index "properties", ["creci"], :name => "index_properties_on_creci"
+  add_index "properties", ["data_publicacao"], :name => "index_properties_on_data_publicacao"
+  add_index "properties", ["dormitorios"], :name => "index_properties_on_dormitorios"
+  add_index "properties", ["localizacao"], :name => "index_properties_on_localizacao"
+  add_index "properties", ["numero_suites"], :name => "index_properties_on_numero_suites"
+  add_index "properties", ["numero_vagas"], :name => "index_properties_on_numero_vagas"
+  add_index "properties", ["rua"], :name => "index_properties_on_rua"
+  add_index "properties", ["tipo"], :name => "index_properties_on_tipo"
+  add_index "properties", ["uf"], :name => "index_properties_on_uf"
+  add_index "properties", ["url"], :name => "index_properties_on_url", :unique => true
+  add_index "properties", ["valor_aluguel"], :name => "index_properties_on_valor_aluguel"
+  add_index "properties", ["valor_condominio"], :name => "index_properties_on_valor_condominio"
+  add_index "properties", ["valor_m2"], :name => "index_properties_on_valor_m2"
+  add_index "properties", ["valor_venda"], :name => "index_properties_on_valor_venda"
 
-  create_table "imovel_imagens", :force => true do |t|
+  create_table "property_images", :force => true do |t|
     t.string   "url"
-    t.integer  "imovel_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "property_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
-  create_table "imovel_sites", :force => true do |t|
+  create_table "property_sources", :force => true do |t|
     t.string   "nome"
     t.string   "url"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "imovel_sites", ["nome"], :name => "index_imovel_sites_on_nome", :unique => true
-  add_index "imovel_sites", ["url"], :name => "index_imovel_sites_on_url", :unique => true
+  add_index "property_sources", ["nome"], :name => "index_property_sources_on_nome", :unique => true
+  add_index "property_sources", ["url"], :name => "index_property_sources_on_url", :unique => true
 
 end

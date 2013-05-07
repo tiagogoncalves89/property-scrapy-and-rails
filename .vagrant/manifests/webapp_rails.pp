@@ -20,7 +20,7 @@ class webapp_rails {
 
   exec { 'rake db':
     path      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/opt/tmp/vagrant-puppet/files_ruby/bin',
-    unless    => 'mysql -u root ror_imoveis_development',
+    unless    => 'mysql -u root ror_properties_development',
     command   => 'bundle exec rake db:create && bundle exec rake db:migrate && bundle exec rake db:seed && bundle exec rake db:test:prepare',
     cwd       => '/vagrant/webapp',
     logoutput => true,

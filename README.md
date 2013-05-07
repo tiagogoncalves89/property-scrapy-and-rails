@@ -13,4 +13,5 @@ Run Scrapper
 1. At the command prompt, run:
 
         vagrant ssh crawler
+        cd /vagrant/crawler
         scrapy crawl zap

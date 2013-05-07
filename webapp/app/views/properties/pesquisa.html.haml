@@ -1,7 +1,7 @@
 = search_form_for @search, :url => request.path do |f|
   .field
-    = f.label :imovel_site_nome_eq, 'Site'
-    = f.text_field :imovel_site_nome_eq
+    = f.label :property_source_nome_eq, 'Site'
+    = f.text_field :property_source_nome_eq
   .field
     = f.label :data_publicacao_gteq, 'Data de publicação maior ou maior que'
     = f.text_field :data_publicacao_gteq
@@ -64,10 +64,10 @@
   .actions
     = f.submit 'Pesquisar'
 
-%table.imoveis
+%table.properties
   %thead
     %tr
-      %th= sort_link @search, :imovel_site_nome, 'Site'
+      %th= sort_link @search, :property_source_nome, 'Site'
       %th= sort_link @search, :data_publicacao, 'Data'
       %th= sort_link @search, :tipo, 'Tipo'
       %th= sort_link @search, :cidade, 'Cidade'
@@ -81,19 +81,19 @@
       %th= sort_link @search, :numero_vagas, 'Vagas'
       %th
   %tbody
-    - @imoveis.limit(100).each do |imovel|
+    - @properties.limit(100).each do |property|
       %tr
-        %td= imovel.imovel_site.nome
-        %td= imovel.data_publicacao
-        %td= imovel.tipo
-        %td= imovel.cidade
-        %td= imovel.bairro
-        %td= imovel.valor_venda
-        %td= imovel.valor_aluguel
-        %td= imovel.valor_condominio
-        %td= imovel.area_util
-        %td= imovel.dormitorios
-        %td= imovel.numero_suites
-        %td= imovel.numero_vagas
+        %td= property.property_source.nome
+        %td= property.data_publicacao
+        %td= property.tipo
+        %td= property.cidade
+        %td= property.bairro
+        %td= property.valor_venda
+        %td= property.valor_aluguel
+        %td= property.valor_condominio
+        %td= property.area_util
+        %td= property.dormitorios
+        %td= property.numero_suites
+        %td= property.numero_vagas
         %td
           %a{:href => '#'} Ver detalhes
