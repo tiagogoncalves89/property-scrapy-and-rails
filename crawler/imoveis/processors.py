@@ -4,8 +4,8 @@ from datetime import date
 class ParseDecimal(object):
 
   def __call__(self, valores):
-    if valores[0]: 
-      return valores[0].replace('.', '').replace(',', '.') 
+    if valores[0]:
+      return valores[0].replace('.', '').replace(',', '.')
 
 
 class ParseDate(object):
