@@ -5,4 +5,12 @@ Getting Started
 2. Install vagrant
 3. At the command prompt, run:
 
-		vagrant up
+        vagrant up
+
+Run Scrapper
+------------
+
+1. At the command prompt, run:
+
+        vagrant ssh crawler
+        scrapy crawl zap
