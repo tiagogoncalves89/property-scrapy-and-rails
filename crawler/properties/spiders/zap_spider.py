@@ -22,6 +22,7 @@ class ZapSpider(SitemapSpider):
   ]
 
   def parse_item(self, response):
+    log.msg("parsing item", log.DEBUG)
     hxs = HtmlXPathSelector(response)
 
     inativo = len(hxs.select('//*[@id="ctl00_ContentPlaceHolder1_msgFichaInativa"]/div[1]/div').extract()) > 0
@@ -30,35 +31,36 @@ class ZapSpider(SitemapSpider):
     if not inativo and not apagado and response.status == 200:
       loader = PropertyLoader(item=PropertyItem(), response = response)
       loader.add_value('url', response.url)
-      loader.add_xpath('tipo', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[1]/text()')
-      loader.add_xpath('valor_aluguel', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divAluguel"]/p[2]/text()', re = "([0-9\.,]+)$")
-      loader.add_xpath('valor_condominio', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liCondominio"]/span[2]/text()', re = "([0-9\.,]+)$")
-      loader.add_xpath('valor_venda', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divValor"]/p[2]/text()', re = "([0-9\.,]+)$")
-      loader.add_xpath('valor_m2', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liValorM2"]/span[2]/text()', re = "([0-9\.,]+)$")
-      loader.add_xpath('numero_suites', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdSuites"]/span[2]/text()', re = "^([0-9]+)")
-      loader.add_xpath('numero_vagas', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdVagas"]/span[2]/text()', re = "^([0-9]+)")
-      loader.add_xpath('dormitorios', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbDorms"]/text()', re = "^([0-9]+)")
-      loader.add_xpath('andares', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbAndar"]/text()', re = "^([0-9]+)")
-      loader.add_xpath('ano_construcao', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbConstrucao"]/text()')
-      loader.add_xpath('area_util', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liAreaM2"]/span[2]/text()', re = "^([0-9]+)")
-      loader.add_xpath('descricao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div[7]/h3/text()')
-      loader.add_xpath('localizacao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[2]/text()')
-      loader.add_xpath('bairro', '//*[@id="divReputacaoBairro"]/h4/span/text()')
-      loader.add_xpath('rua', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[3]/text()')
-      loader.add_xpath('anunciante', '//*[@id="ctl00_ContentPlaceHolder1_contatelateral_plAnunciante"]/div[2]/h4/text()')
+      loader.add_xpath('type_of_property', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[1]/text()')
+      loader.add_xpath('rent_value', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divAluguel"]/p[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('maintenance_value', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liCondominio"]/span[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('sell_value', '//*[@id="ctl00_ContentPlaceHolder1_resumo_divValor"]/p[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('square_meter', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liValorM2"]/span[2]/text()', re = "([0-9\.,]+)$")
+      loader.add_xpath('number_of_suites', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdSuites"]/span[2]/text()', re = "^([0-9]+)")
+      loader.add_xpath('number_of_parking_space', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liQtdVagas"]/span[2]/text()', re = "^([0-9]+)")
+      loader.add_xpath('bedroom', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbDorms"]/text()', re = "^([0-9]+)")
+      loader.add_xpath('floors', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbAndar"]/text()', re = "^([0-9]+)")
+      loader.add_xpath('built_year', '//*[@id="ctl00_ContentPlaceHolder1_detalhes_lbConstrucao"]/text()')
+      loader.add_xpath('area', '//*[@id="ctl00_ContentPlaceHolder1_resumo_liAreaM2"]/span[2]/text()', re = "^([0-9]+)")
+      loader.add_xpath('description', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div[7]/h3/text()')
+      loader.add_xpath('location', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[2]/text()')
+      loader.add_xpath('neighborhood', '//*[@id="divReputacaoBairro"]/h4/span/text()')
+      loader.add_xpath('street', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/h1/span[3]/text()')
+      loader.add_xpath('agent', '//*[@id="ctl00_ContentPlaceHolder1_contatelateral_planunciante"]/div[2]/h4/text()')
       loader.add_xpath('creci', '//*[@id="ctl00_ContentPlaceHolder1_contatelateral_pCreci"]/text()', re = "([0-9a-zA-Z ]+)$")
-      loader.add_xpath('areas_comuns', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[3]/div[1]/ul/li/text()')
-      loader.add_xpath('condicoes_comerciais', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[2]/ul/li/text()')
-      loader.add_xpath('outros_itens', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[1]/ul/li/text()')
-      loader.add_xpath('telefones', '//*[@id="ctl00_ContentPlaceHolder1_vertelefones"]/div[3]/div/span/text()')
+      loader.add_xpath('common_area', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[3]/div[1]/ul/li/text()')
+      loader.add_xpath('trade_terms', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[2]/ul/li/text()')
+      loader.add_xpath('other_things', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[5]/div[1]/ul/li/text()')
+      loader.add_xpath('phones', '//*[@id="ctl00_ContentPlaceHolder1_vertelefones"]/div[3]/div/span/text()')
       loader.add_xpath('images', '//*[@id="galleria"]/a/@href')
-      loader.add_xpath('data_publicacao', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div/span[1]/text()', re = "([0-9/]+)$")
-      loader.add_xpath('uf', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var UF='([^']+)';")
-      loader.add_xpath('cidade', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var Cidade='([^']+)';")
+      loader.add_xpath('publish_date', '//*[@id="zapGeral"]/div/div[4]/div[3]/div[1]/div/span[1]/text()', re = "([0-9/]+)$")
+      loader.add_xpath('state', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var UF='([^']+)';")
+      loader.add_xpath('city', '//*[@id="zapGeral"]/div/div[4]/div[3]/div/script[1]/text()', re = "var cidade='([^']+)';")
 
       return loader.load_item()
 
   def __init__(self):
+    log.msg("Connecting in database", log.DEBUG)
     self.conn = MySQLdb.connect(
       user=settings['DATABASE_USER'],
       passwd=settings['DATABASE_PASSWORD'],

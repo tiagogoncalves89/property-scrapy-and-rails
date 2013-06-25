@@ -6,4 +6,4 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-PropertySource.create({ nome: 'Zap', url: 'http://www.zap.com.br' })
+PropertySource.create({ name: 'Zap', url: 'http://www.zap.com.br' })

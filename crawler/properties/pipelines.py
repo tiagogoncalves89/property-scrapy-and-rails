@@ -12,33 +12,33 @@ from twisted.enterprise import adbapi
 class DefaultValuesPipeline(object):
 
   def process_item(self, item, spider):
-    item.setdefault('ano_construcao', None)
+    log.msg("Setting default values of item", log.DEBUG)
 
-    item.setdefault('valor_aluguel', None)
-    item.setdefault('valor_condominio', None)
-    item.setdefault('valor_venda', None)
-    item.setdefault('valor_m2', None)
-    item.setdefault('numero_suites', 0)
-    item.setdefault('numero_vagas', 0)
-    item.setdefault('dormitorios', 0)
-    item.setdefault('andares', None)
-    item.setdefault('ano_construcao', None)
-    item.setdefault('area_util', None)
-    item.setdefault('descricao', '')
-    item.setdefault('tipo', '')
-    item.setdefault('localizacao', '')
-    item.setdefault('uf', '')
-    item.setdefault('cidade', '')
-    item.setdefault('bairro', '')
-    item.setdefault('rua', '')
-    item.setdefault('anunciante', '')
+    item.setdefault('rent_value', None)
+    item.setdefault('maintenance_value', None)
+    item.setdefault('sell_value', None)
+    item.setdefault('square_meter', None)
+    item.setdefault('number_of_suites', 0)
+    item.setdefault('number_of_parking_space', 0)
+    item.setdefault('bedroom', 0)
+    item.setdefault('floors', None)
+    item.setdefault('built_year', None)
+    item.setdefault('area', None)
+    item.setdefault('description', '')
+    item.setdefault('type_of_property', '')
+    item.setdefault('location', '')
+    item.setdefault('state', '')
+    item.setdefault('city', '')
+    item.setdefault('neighborhood', '')
+    item.setdefault('street', '')
+    item.setdefault('agent', '')
     item.setdefault('creci', '')
-    item.setdefault('areas_comuns', '')
-    item.setdefault('condicoes_comerciais', '')
-    item.setdefault('outros_itens', '')
-    item.setdefault('telefones', '')
+    item.setdefault('common_area', '')
+    item.setdefault('trade_terms', '')
+    item.setdefault('other_things', '')
+    item.setdefault('phones', '')
     item.setdefault('images', [])
-    item.setdefault('data_publicacao', '')
+    item.setdefault('publish_date', '')
     item.setdefault('url', '')
 
     return item
@@ -46,6 +46,8 @@ class DefaultValuesPipeline(object):
 class MySQLStorePipeline(object):
 
   def __init__(self):
+    log.msg("connecting in database", log.DEBUG)
+
     self.dbpool = adbapi.ConnectionPool('MySQLdb',
       host = settings['DATABASE_HOST'],
       db = settings['DATABASE_NAME'],
@@ -57,52 +59,54 @@ class MySQLStorePipeline(object):
     )
 
   def process_item(self, item, spider):
+    log.msg("processing item in MySQLStorePipeline", log.DEBUG)
     query = self.dbpool.runInteraction(self._insert, item)
 
     return item
 
   def _insert(self, tx, item):
+    log.msg("inserting item in database", log.DEBUG)
     try:
-      aluguel = False
-      if item['valor_aluguel'] > 0:
-        aluguel = True
+      rent = False
+      if item['rent_value'] > 0:
+        rent = True
 
-      venda = False
-      if item['valor_venda'] > 0:
-        venda = True
+      sell = False
+      if item['sell_value'] > 0:
+        sell = True
 
       tx.execute("INSERT IGNORE INTO `properties`\
-        (valor_aluguel, valor_condominio, valor_venda, valor_m2, numero_suites, numero_vagas, dormitorios, andares, ano_construcao, \
-          area_util, descricao, tipo, localizacao, uf, cidade, bairro, rua, anunciante, creci, areas_comuns, condicoes_comerciais, outros_itens, \
-          telefones, data_publicacao, url, aluguel, venda, property_source_id, created_at, updated_at)\
+        (rent_value, maintenance_value, sell_value, square_meter, number_of_suites, number_of_parking_space, bedroom, floors, built_year, \
+          area, description, type_of_property, location, state, city, neighborhood, street, agent, creci, common_area, trade_terms, other_things, \
+          phones, publish_date, url, rent, sell, property_source_id, created_at, updated_at)\
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 1, now(), now())", (
-          item['valor_aluguel'],
-          item['valor_condominio'],
-          item['valor_venda'],
-          item['valor_m2'],
-          item['numero_suites'],
-          item['numero_vagas'],
-          item['dormitorios'],
-          item['andares'],
-          item['ano_construcao'],
-          item['area_util'],
-          item['descricao'],
-          item['tipo'],
-          item['localizacao'],
-          item['uf'],
-          item['cidade'],
-          item['bairro'],
-          item['rua'],
-          item['anunciante'],
+          item['rent_value'],
+          item['maintenance_value'],
+          item['sell_value'],
+          item['square_meter'],
+          item['number_of_suites'],
+          item['number_of_parking_space'],
+          item['bedroom'],
+          item['floors'],
+          item['built_year'],
+          item['area'],
+          item['description'],
+          item['type_of_property'],
+          item['location'],
+          item['state'],
+          item['city'],
+          item['neighborhood'],
+          item['street'],
+          item['agent'],
           item['creci'],
-          item['areas_comuns'],
-          item['condicoes_comerciais'],
-          item['outros_itens'],
-          item['telefones'],
-          item['data_publicacao'],
+          item['common_area'],
+          item['trade_terms'],
+          item['other_things'],
+          item['phones'],
+          item['publish_date'],
           item['url'],
-          aluguel,
-          venda
+          rent,
+          sell
         )
       )
 
@@ -115,6 +119,6 @@ class MySQLStorePipeline(object):
                 image,
                 property_id
               ))
+
     except MySQLdb.Error, e:
-      log.msg('URL DO ERRO: ' + str(item['url']), log.ERROR)
       log.msg(("Error %d: %s" % (e.args[0], e.args[1])), log.ERROR)

@@ -7,14 +7,14 @@ class PropertyLoader(XPathItemLoader):
 
   images_out = Identity()
 
-  areas_comuns_out = Join(', ')
-  condicoes_comerciais_out = Join(', ')
-  outros_itens_out = Join(', ')
-  telefones_out = Join(', ')
+  common_area_out = Join(', ')
+  trade_terms_out = Join(', ')
+  other_things_out = Join(', ')
+  phones_out = Join(', ')
 
-  valor_condominio_out = ParseDecimal()
-  valor_venda_out = ParseDecimal()
-  valor_aluguel_out = ParseDecimal()
-  valor_m2_out = ParseDecimal()
+  maintenance_value_out = ParseDecimal()
+  sell_value_out = ParseDecimal()
+  rent_value_out = ParseDecimal()
+  square_meter_out = ParseDecimal()
 
-  data_publicacao_out = ParseDate()
+  publish_date_out = ParseDate()

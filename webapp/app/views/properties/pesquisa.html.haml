@@ -1,99 +1,99 @@
 = search_form_for @search, :url => request.path do |f|
   .field
-    = f.label :property_source_nome_eq, 'Site'
-    = f.text_field :property_source_nome_eq
+    = f.label :property_source_name_eq, 'Site'
+    = f.text_field :property_source_name_eq
   .field
-    = f.label :data_publicacao_gteq, 'Data de publicação maior ou maior que'
-    = f.text_field :data_publicacao_gteq
+    = f.label :publish_date_gteq, 'Data de publicação maior ou maior que'
+    = f.text_field :publish_date_gteq
   .field
-    = f.label :data_publicacao_lteq, 'Data de publicação menor ou maior que'
-    = f.text_field :data_publicacao_lteq
+    = f.label :publish_date_lteq, 'Data de publicação menor ou maior que'
+    = f.text_field :publish_date_lteq
   .field
-    = f.label :tipo_eq, 'Tipo é'
-    = f.text_field :tipo_eq
+    = f.label :type_of_property_eq, 'Tipo é'
+    = f.text_field :type_of_property_eq
   .field
-    = f.label :cidade_eq, 'Cidade é'
-    = f.text_field :cidade_eq
+    = f.label :city_eq, 'Cidade é'
+    = f.text_field :city_eq
   .field
-    = f.label :bairro_eq, 'Bairro é'
-    = f.text_field :bairro_eq
-  - if @venda
+    = f.label :neighborhood_eq, 'Bairro é'
+    = f.text_field :neighborhood_eq
+  - if @sell
     .field
-      = f.label :valor_venda_gteq, 'Valor da venda maior ou igual que'
-      = f.text_field :valor_venda_gteq
+      = f.label :sell_value_gteq, 'Valor da venda maior ou igual que'
+      = f.text_field :sell_value_gteq
     .field
-      = f.label :valor_venda_lt, 'Valor da venda menor que'
-      = f.text_field :valor_venda_lt
-  - if @aluguel
+      = f.label :sell_value_lt, 'Valor da venda menor que'
+      = f.text_field :sell_value_lt
+  - if @rent
     .field
-      = f.label :valor_aluguel_gteq, 'Valor do aluguel maior ou igual que'
-      = f.text_field :valor_aluguel_gteq
+      = f.label :rent_value_gteq, 'Valor do aluguel maior ou igual que'
+      = f.text_field :rent_value_gteq
     .field
-      = f.label :valor_aluguel_lteq, 'Valor do aluguel menor ou igual que'
-      = f.text_field :valor_aluguel_lteq
+      = f.label :rent_value_lteq, 'Valor do aluguel menor ou igual que'
+      = f.text_field :rent_value_lteq
   .field
-    = f.label :valor_condominio_gteq, 'Valor do condomínio maior ou igual que'
-    = f.text_field :valor_condominio_gteq
+    = f.label :maintenance_value_gteq, 'Valor do condomínio maior ou igual que'
+    = f.text_field :maintenance_value_gteq
   .field
-    = f.label :valor_condominio_lteq, 'Valor do condomínio menor ou igual que'
-    = f.text_field :valor_condominio_lteq
+    = f.label :maintenance_value_lteq, 'Valor do condomínio menor ou igual que'
+    = f.text_field :maintenance_value_lteq
   .field
-    = f.label :area_util_gteq, 'Área útil maior ou igual que'
-    = f.text_field :area_util_gteq
+    = f.label :area_gteq, 'Área útil maior ou igual que'
+    = f.text_field :area_gteq
   .field
-    = f.label :area_util_lteq, 'Área útil menor ou igual que'
-    = f.text_field :area_util_lteq
+    = f.label :area_lteq, 'Área útil menor ou igual que'
+    = f.text_field :area_lteq
   .field
-    = f.label :dormitorios_gteq, 'Dormitórios maior ou igual que'
-    = f.text_field :dormitorios_gteq
+    = f.label :bedroom_gteq, 'Dormitórios maior ou igual que'
+    = f.text_field :bedroom_gteq
   .field
-    = f.label :dormitorios_lteq, 'Dormitórios menor ou igual que'
-    = f.text_field :dormitorios_lteq
+    = f.label :bedroom_lteq, 'Dormitórios menor ou igual que'
+    = f.text_field :bedroom_lteq
   .field
-    = f.label :numero_suites_gteq, 'Número de suites maior ou igual que'
-    = f.text_field :numero_suites_gteq
+    = f.label :number_of_suites_gteq, 'Número de suites maior ou igual que'
+    = f.text_field :number_of_suites_gteq
   .field
-    = f.label :numero_suites_lteq, 'Número de suítes menor ou igual que'
-    = f.text_field :numero_suites_lteq
+    = f.label :number_of_suites_lteq, 'Número de suítes menor ou igual que'
+    = f.text_field :number_of_suites_lteq
   .field
-    = f.label :numero_vagas_gteq, 'Número de vagas maior ou igual que'
-    = f.text_field :numero_vagas_gteq
+    = f.label :number_of_parking_space_gteq, 'Número de vagas maior ou igual que'
+    = f.text_field :number_of_parking_space_gteq
   .field
-    = f.label :numero_vagas_lteq, 'Número de vagas menor ou igual que'
-    = f.text_field :numero_vagas_lteq
+    = f.label :number_of_parking_space_lteq, 'Número de vagas menor ou igual que'
+    = f.text_field :number_of_parking_space_lteq
   .actions
     = f.submit 'Pesquisar'
 
 %table.properties
   %thead
     %tr
-      %th= sort_link @search, :property_source_nome, 'Site'
-      %th= sort_link @search, :data_publicacao, 'Data'
-      %th= sort_link @search, :tipo, 'Tipo'
-      %th= sort_link @search, :cidade, 'Cidade'
-      %th= sort_link @search, :bairro, 'Bairro'
-      %th= sort_link @search, :valor_venda, 'Valor' if @venda
-      %th= sort_link @search, :valor_aluguel, 'Valor' if @aluguel
-      %th= sort_link @search, :valor_condominio, 'Condomínio'
-      %th= sort_link @search, :area_util, 'Área'
-      %th= sort_link @search, :dormitorios, 'Quartos'
-      %th= sort_link @search, :numero_suites, 'Suítes'
-      %th= sort_link @search, :numero_vagas, 'Vagas'
+      %th= sort_link @search, :property_source_name, 'Site'
+      %th= sort_link @search, :publish_date, 'Data'
+      %th= sort_link @search, :type_of_property, 'Tipo'
+      %th= sort_link @search, :city, 'Cidade'
+      %th= sort_link @search, :neighborhood, 'Bairro'
+      %th= sort_link @search, :sell_value, 'Valor' if @sell
+      %th= sort_link @search, :rent_value, 'Valor' if @rent
+      %th= sort_link @search, :maintenance_value, 'Condomínio'
+      %th= sort_link @search, :area, 'Área'
+      %th= sort_link @search, :bedroom, 'Quartos'
+      %th= sort_link @search, :number_of_suites, 'Suítes'
+      %th= sort_link @search, :number_of_parking_space, 'Vagas'
       %th
   %tbody
     - @properties.limit(100).each do |property|
       %tr
-        %td= property.property_source.nome
-        %td= property.data_publicacao
-        %td= property.tipo
-        %td= property.cidade
-        %td= property.bairro
-        %td= property.valor_venda
-        %td= property.valor_aluguel
-        %td= property.valor_condominio
-        %td= property.area_util
-        %td= property.dormitorios
-        %td= property.numero_suites
-        %td= property.numero_vagas
+        %td= property.property_source.name
+        %td= property.publish_date
+        %td= property.type_of_property
+        %td= property.city
+        %td= property.neighborhood
+        %td= property.sell_value
+        %td= property.rent_value
+        %td= property.maintenance_value
+        %td= property.area
+        %td= property.bedroom
+        %td= property.number_of_suites
+        %td= property.number_of_parking_space
         %td
           %a{:href => '#'} Ver detalhes

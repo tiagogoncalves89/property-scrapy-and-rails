@@ -15,13 +15,5 @@
 # end
 
 ActiveSupport::Inflector.inflections do |inflect|
-  inflect.irregular 'property', 'properties'
-
-  inflect.irregular 'property_image', 'property_images'
-  inflect.plural 'property_image', 'property_images'
-  inflect.singular 'property_images', 'property_image'
-  inflect.irregular 'PropertyImage', 'PropertyImages'
-  inflect.plural 'PropertyImage', 'PropertyImages'
-  inflect.singular 'PropertyImages', 'PropertyImage'
 
 end
